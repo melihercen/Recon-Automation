@@ -1,45 +1,41 @@
 # 🕵️ Recon Automation Tool
 
-Bu araç, hedef domain üzerinde otomatik bilgi toplama (recon) işlemlerini gerçekleştirmek için geliştirilmiş bir Python scriptidir.  
-Subdomain keşfi, Web Archive (Wayback Machine) analizi ve isteğe bağlı Nmap taramalarını çoklu thread yapısıyla hızlı bir şekilde gerçekleştirir.
+Bu araç Subdomain keşfi, Web Archive taraması, endpoint analizi ve port taraması yapan otomatik bir recon aracı.
 
 ---
 
 ## 🚀 Özellikler
 
-- **Subdomain keşfi**
-  - assetfinder + httprobe ile canlı subdomain toplama
-- **Web Archive (Wayback Machine) taraması**
-  - Tüm arşivlenmiş URL’leri çekme
-  - Hassas endpoint filtreleme (admin/login/api/backup vb.)
-- **Otomatik klasörleme**
-  - Her subdomain için ayrı klasör oluşturma
-- **Opsiyonel Nmap taraması**
-  - `-A` parametresi ile OS detection + service detection
-- **Çoklu iş parçacığı (Thread) desteği**
-  - Büyük hedeflerde ciddi hız kazandırır
-- **Temiz loglama**
-  - Her aşamada ne yapıldığı ekrana yansır
-
+ Subdomain Keşfi — assetfinder + httpx ile canlı subdomainleri bulur
+ Web Archive Taraması — Wayback Machine'den hassas dosya ve URL'leri çeker
+ Endpoint Analizi — gau + waybackurls ile endpoint, parametre ve JS analizi yapar
+ Hassas Endpoint Tespiti — Admin, API, config gibi kritik path'leri filtreler
+ Nmap Taraması — Açık port ve servis tespiti yapar
+ Multi-Thread — Tüm işlemler paralel çalışır
 ---
 
-## 📦 Gereksinimler
+## 🛠️ Gereksinimler
 
-### Operating System:
-- Linux (Kali, Ubuntu, Parrot OS vs.)
-
-### Python modülleri:
-- Standart modüller (ekstra kurulum gerekmez):
-  - `argparse`, `subprocess`, `re`, `os`, `concurrent.futures`
+| Araç | Zorunlu | Kullanım |
+|---|---|---|
+| Python 3.x | ✅ | Ana dil |
+| assetfinder | ✅ | Subdomain keşfi |
+| httpx | ✅ | Canlı subdomain filtresi |
+| gau | ✅ | URL toplama |
+| waybackurls | ✅ | URL toplama |
+| curl | ✅ | JS dosyası indirme |
+| nmap | ⚪ Opsiyonel | Port taraması |
 
 ### Dış araçlar:
 Aşağıdakilerin sistemde kurulu olması gerekir:
 
 #### 🔹 1. assetfinder  
 
-#### 🔹 2. httprobe  
+#### 🔹 2. httpx 
 
-#### 🔹 3. nmap  
+#### 🔹 3. Gau
+
+#### 🔹 4. nmap  
 
 ---
 
@@ -49,13 +45,15 @@ En basit kullanım:
 
 
 ### Parametreler:
-- python3 recon.py -u example.com -t 15 --nmap
+- python3 recon.py -u example.com -t 15 --nmap --endpoints
   
 | Parametre | Açıklama |
 |----------|----------|
 | `-u` | Hedef domain (zorunlu) |
 | `-t` | Thread sayısı (varsayılan: 10) |
 | `--nmap` | Subdomain’lere Nmap -A taraması yapar |
+| `--endpoints` | Subdomain’lere Endpoint analizi yapar |
+
 
 
 
